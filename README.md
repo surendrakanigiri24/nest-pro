@@ -11,3 +11,5 @@ nest --version
 # initilazation of nest project
 nest new project-name
 
+# lint config if not 
+npm init @eslint/config
