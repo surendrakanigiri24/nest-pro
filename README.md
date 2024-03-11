@@ -13,3 +13,12 @@ nest new project-name
 
 # lint config if not 
 npm init @eslint/config
+
+# to create a module
+nest g module module-name
+
+# to create a controller
+nest g controller path-to-controller --no-spec
+
+# to create a service
+nest g service path-to-service --no-spec
