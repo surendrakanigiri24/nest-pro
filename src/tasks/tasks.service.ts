@@ -15,6 +15,12 @@ export class TasksService {
     return this.tasks.find(task => task.id === id)
   }
 
+  updateTaskById (id: string, status: TaskStatus): Task | undefined {
+    const task = this.getTaskById(id)
+    if ((task?.status) != null) task.status = status
+    return task
+  }
+
   createTask (createTaskDto: CreateTaskDto): Task {
     const { title, description } = createTaskDto
     const task: Task = {
