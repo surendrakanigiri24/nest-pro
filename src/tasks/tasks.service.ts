@@ -5,7 +5,7 @@ import { type CreateTaskDto } from './dto/create-task.dto'
 
 @Injectable()
 export class TasksService {
-  private readonly tasks: Task[] = []
+  private tasks: Task[] = []
 
   getAllTasks (): Task[] {
     return this.tasks
@@ -26,5 +26,9 @@ export class TasksService {
 
     this.tasks.push(task)
     return task
+  }
+
+  deleteATask (id: string): void {
+    this.tasks = this.tasks.filter(task => task.id !== id)
   }
 }
