@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UsePipes, Val
 import { TasksService } from './tasks.service'
 import { TaskStatus, type Task } from './task.model'
 import { CreateTaskDto } from './dto/create-task.dto'
-import { GetTasksByFilter } from './dto/get-tasks-by-filter.dto'
+import { GetTasksByFilterDto } from './dto/get-tasks-by-filter.dto'
 import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe'
 
 @Controller('tasks')
@@ -10,7 +10,7 @@ export class TasksController {
   constructor (private readonly tasksService: TasksService) {}
 
   @Get()
-  getAllTasks (@Query() fileterData: GetTasksByFilter): Task[] | undefined {
+  getAllTasks (@Query() fileterData: GetTasksByFilterDto): Task[] | undefined {
     if (Object.keys(fileterData).length > 0) {
       return this.tasksService.getTasksByFilter(fileterData)
     }
