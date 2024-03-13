@@ -22,3 +22,6 @@ nest g controller path-to-controller --no-spec
 
 # to create a service
 nest g service path-to-service --no-spec
+
+# for pg setupt install
+npm i/add pg typeorm @nestjs/typeorm
