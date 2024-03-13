@@ -11,6 +11,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DATABASE,
-  entities: ['/opt/lampp/hitdocs/bitbucketworkspace/NEST/nest-pro/src/*.entity.ts'],
+  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
   synchronize: true
 }
