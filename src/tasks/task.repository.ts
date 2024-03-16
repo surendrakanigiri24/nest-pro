@@ -1,7 +1,8 @@
-import { EntityRepository, Repository } from 'typeorm'
-import { Task } from './task.entity'
+// import { type CreateTaskDto } from './dto/create-task.dto'
+import { type Task } from './task.entity'
+import { Repository } from 'typeorm'
+// import { TaskStatus } from './task.enum'
 
-@EntityRepository(Task)
 export class TaskRepository extends Repository<Task> {
-
+  // Your custom repository methods here
 }
