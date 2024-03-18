@@ -1,15 +1,18 @@
 import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { JwtService } from '@nestjs/jwt'
 import { type AuthCredentialsDto } from './dto/auth-credentails.dto'
 import { User } from './auth.entity'
 import { UserRepository } from './auth.repository'
 import * as bcrypt from 'bcrypt'
+import { type JwtPayload } from './jwt-payload'
 
 @Injectable()
 export class AuthService {
   constructor (
     @InjectRepository(User)
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService
   ) {}
 
   async signUp (authControllerDto: AuthCredentialsDto): Promise<void> {
@@ -32,7 +35,7 @@ export class AuthService {
     }
   }
 
-  async signIn (authControllerDto: AuthCredentialsDto): Promise<string | null> {
+  async signIn (authControllerDto: AuthCredentialsDto): Promise<{ accessToken: string } | null> {
     const { username, password } = authControllerDto
 
     const user = await this.userRepository.findOne({ where: { username } })
@@ -41,7 +44,10 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentails')
     }
     if (await user.validatePassword(password)) {
-      return user.username
+      const username = user.username
+      const payLoad: JwtPayload = { username }
+      const accessToken = this.jwtService.sign(payLoad)
+      return { accessToken }
     } else {
       return null
     }
