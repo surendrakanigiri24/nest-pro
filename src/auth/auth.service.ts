@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common'
+import { ConflictException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { type AuthCredentialsDto } from './dto/auth-credentails.dto'
 import { User } from './auth.entity'
@@ -29,6 +29,21 @@ export class AuthService {
       } else {
         throw new InternalServerErrorException()
       }
+    }
+  }
+
+  async signIn (authControllerDto: AuthCredentialsDto): Promise<string | null> {
+    const { username, password } = authControllerDto
+
+    const user = await this.userRepository.findOne({ where: { username } })
+
+    if (user === null || user === undefined) {
+      throw new UnauthorizedException('Invalid credentails')
+    }
+    if (await user.validatePassword(password)) {
+      return user.username
+    } else {
+      return null
     }
   }
 
