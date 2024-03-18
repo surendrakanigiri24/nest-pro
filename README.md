@@ -25,3 +25,6 @@ nest g service path-to-service --no-spec
 
 # for pg setupt install
 npm i/add pg typeorm @nestjs/typeorm
+
+# for authorization
+npm i @nestjs/jwt @nestjs/passport passport passport-jwt
