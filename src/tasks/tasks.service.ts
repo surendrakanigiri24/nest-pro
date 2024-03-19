@@ -69,10 +69,14 @@ export class TasksService {
     if (taskDelete.affected === 0) { throw new NotFoundException(`Task with id ${id} not found`) }
   }
 
-  // async updateTaskById (id: number, status: TaskStatus): Promise<Task> {
-  //   const task = await this.getTaskById(id)
-  //   task.status = status
-  //   await task.save()
-  //   return task
-  // }
+  async updateTaskById (
+    id: number, 
+    status: TaskStatus,
+    user: User
+  ): Promise<Task> {
+    const task = await this.getTaskById(id, user)
+    task.status = status
+    await task.save()
+    return task
+  }
 }
